@@ -1,47 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_PROMETHEUS",
-      "label": "prometheus",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "prometheus",
-      "pluginName": "Prometheus"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "panel",
-      "id": "gauge",
-      "name": "Gauge",
-      "version": ""
-    },
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "10.4.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "stat",
-      "name": "Stat",
-      "version": ""
-    },
-    {
-      "type": "panel",
-      "id": "timeseries",
-      "name": "Time series",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -61,13 +18,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 13,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -100,7 +57,7 @@
       },
       "gridPos": {
         "h": 6,
-        "w": 20,
+        "w": 21,
         "x": 0,
         "y": 0
       },
@@ -126,7 +83,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "cpu_usage{job=\"metrics\"}",
@@ -152,7 +109,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -165,7 +122,6 @@
             "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
-            "axisSoftMin": -2,
             "barAlignment": 0,
             "drawStyle": "line",
             "fillOpacity": 0,
@@ -192,7 +148,7 @@
               "mode": "dashed"
             }
           },
-          "fieldMinMax": true,
+          "fieldMinMax": false,
           "mappings": [],
           "min": 0,
           "thresholds": {
@@ -226,10 +182,14 @@
       "interval": "5",
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "min",
+            "max",
+            "last"
+          ],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -240,7 +200,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -255,13 +215,19 @@
         }
       ],
       "title": "Использование процессора",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -312,7 +278,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "count(cpu_usage)",
@@ -329,7 +295,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -388,7 +354,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "avg(cpu_usage{job=\"metrics\"})",
@@ -405,7 +371,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -477,10 +443,14 @@
       "interval": "5",
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "min",
+            "max",
+            "last"
+          ],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
           "mode": "single",
@@ -491,7 +461,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "disableTextWrap": false,
           "editorMode": "code",
@@ -501,18 +471,24 @@
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "CPU USAGE",
+          "refId": "MEMORY USAGE",
           "useBackend": false
         }
       ],
       "title": "Использование оперативной памяти",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {}
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -562,7 +538,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "memory_total{job=\"metrics\"}",
@@ -579,7 +555,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "description": "",
       "fieldConfig": {
@@ -638,7 +614,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "memory_used{job=\"metrics\"}",
@@ -650,7 +626,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
           "expr": "memory_total{job=\"metrics\"}",
@@ -680,10 +656,24 @@
       "type": "gauge"
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 12,
+      "panels": [],
+      "title": "Информация о дисках",
+      "type": "row"
+    },
+    {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -706,9 +696,13 @@
             },
             "insertNulls": false,
             "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
+              "linearThreshold": 5,
               "type": "linear"
             },
             "showPoints": "auto",
@@ -748,48 +742,64 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 22
+        "y": 23
       },
       "id": 7,
       "interval": "5",
       "options": {
         "legend": {
-          "calcs": [],
+          "calcs": [
+            "min",
+            "max",
+            "last"
+          ],
           "displayMode": "list",
           "placement": "bottom",
-          "showLegend": false
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
+      "repeat": "disks_usage",
+      "repeatDirection": "v",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "disableTextWrap": false,
           "editorMode": "code",
-          "expr": "avg(disk_used{job=\"metrics\"})",
+          "expr": "${disks_usage:raw}",
           "fullMetaSearch": false,
+          "hide": false,
           "includeNullMetadata": true,
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
-          "refId": "CPU USAGE",
+          "refId": "DISK USAGE",
           "useBackend": false
         }
       ],
       "title": "Использование дискового пространства",
+      "transformations": [
+        {
+          "id": "labelsToFields",
+          "options": {
+            "mode": "columns",
+            "valueLabel": "disk"
+          }
+        }
+      ],
       "transparent": true,
       "type": "timeseries"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "fieldConfig": {
         "defaults": {
@@ -815,7 +825,7 @@
         "h": 8,
         "w": 4,
         "x": 12,
-        "y": 22
+        "y": 23
       },
       "id": 8,
       "options": {
@@ -839,24 +849,24 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
-          "expr": "disk_total{job=\"metrics\"}",
+          "expr": "sum(disk_total{job=\"metrics\"})",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Всего места на диске",
+      "title": "Всего места на дисках",
       "transparent": true,
       "type": "stat"
     },
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "ce6l52zxltjb4d"
       },
       "description": "",
       "fieldConfig": {
@@ -891,7 +901,7 @@
         "h": 8,
         "w": 5,
         "x": 16,
-        "y": 22
+        "y": 23
       },
       "id": 9,
       "interval": "5",
@@ -915,10 +925,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
-          "expr": "disk_used{job=\"metrics\"}",
+          "expr": "sum(disk_used{job=\"metrics\"})",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -927,10 +937,10 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "ce6l52zxltjb4d"
           },
           "editorMode": "code",
-          "expr": "disk_total{job=\"metrics\"}",
+          "expr": "sum(disk_total{job=\"metrics\"})",
           "hide": false,
           "instant": false,
           "legendFormat": "__auto",
@@ -938,7 +948,7 @@
           "refId": "B"
         }
       ],
-      "title": "Занято места на диске",
+      "title": "Занято места на дисках",
       "transformations": [
         {
           "id": "configFromData",
@@ -946,7 +956,7 @@
             "configRefId": "B",
             "mappings": [
               {
-                "fieldName": "{__name__=\"disk_total\", instance=\"localhost:8000\", job=\"metrics\"}",
+                "fieldName": "sum(disk_total{job=\"metrics\"})",
                 "handlerKey": "max"
               }
             ]
@@ -961,16 +971,50 @@
   "schemaVersion": 39,
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "disk_used{disk=\"C\",instance=\"localhost:8000\",job=\"metrics\"}",
+            "disk_used{disk=\"D\",instance=\"localhost:8000\",job=\"metrics\"}"
+          ],
+          "value": [
+            "disk_used{disk=\"C\",instance=\"localhost:8000\",job=\"metrics\"}",
+            "disk_used{disk=\"D\",instance=\"localhost:8000\",job=\"metrics\"}"
+          ]
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "ce6l52zxltjb4d"
+        },
+        "definition": "disk_used{job=\"metrics\"}",
+        "hide": 0,
+        "includeAll": true,
+        "multi": true,
+        "name": "disks_usage",
+        "options": [],
+        "query": {
+          "qryType": 5,
+          "query": "disk_used{job=\"metrics\"}",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      }
+    ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "browser",
   "title": "Prometheus test",
   "uid": "ce6l52clngphcd",
-  "version": 10,
+  "version": 16,
   "weekStart": ""
 }

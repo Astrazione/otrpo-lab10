@@ -9,7 +9,7 @@
 pip install prometheus-client psutil python-dotenv
 ```
 В файле `params.env` необходимо указать переменные окружения
-`EXPORTER_HOST`, `EXPORTER_PORT`
+`EXPORTER_HOST`, `EXPORTER_PORT`, `INTERVAL`
 
 В конфиге `prometheus.yml` необходимо добавить в `scrape_configs`:
 ```yml
@@ -17,15 +17,17 @@ pip install prometheus-client psutil python-dotenv
   static_configs:
   - targets: ["localhost:8000"]
 ```
+Также рекомендуется установить значения `scrape_interval` и `evaluation_interval` на `5s`
 
 В Grafana нужно импортировать `dashboard` и настроить `datasource`
 
 ## Запросы на PromQL
 
-Процент загрузки процессора: `avg(cpu_usage{job="metrics"})`
+Использование процессоров: `avg(cpu_usage{job="metrics"})` (среднее по всем ядрам), `cpu_usage{job="metrics"}` (процент нагрузки по каждому ядру)
 
-Количество потоков процессора: `count(cpu_usage{job="metrics"})`
+Всего, используемая оперативная память (в байтах): `{__name__=~"memory_total|memory_used"}`
 
-Всего и используемая оперативная память (в байтах): `memory_total{job="metrics"}` и `memory_used{job="metrics"}`
+Всего, используемое дисковое пространство (в байтах): `{__name__=~"disk_used|disk_total"}` (для отдельных дисков),
+`sum({__name__=~"disk_used|disk_total"}) by (__name__)` (для общего случая)
 
-Всего и используемое дисковое пространство (в байтах): `disk_total{job="metrics"}` и `disk_used{job="metrics"}`
+(дополнительный запрос) Количество потоков процессора: `count(cpu_usage{job="metrics"})`

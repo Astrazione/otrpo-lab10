@@ -10,11 +10,13 @@ class MetricsCollector:
     cpu_usage = Gauge("cpu_usage", "Usage of CPU cores", ["core"])
     memory_total = Gauge("memory_total", "Total memory in the system")
     memory_used = Gauge("memory_used", "Used memory in the system")
-    disk_total = Gauge("disk_total", "Total disk space")
-    disk_used = Gauge("disk_used", "Used disk space")
+    disk_total = Gauge("disk_total", "Total disk space", ['disk'])
+    disk_used = Gauge("disk_used", "Used disk space", ['disk'])
     collecting_task = None
+    interval = None
 
-    async def start_collecting(self):
+    async def start_collecting(self, timeout=5):
+        self.interval = timeout
         logging.info('Запуск сборщика метрик')
         self.collecting_task = asyncio.create_task(self.collecting_loop())
         await self.collecting_task
@@ -26,7 +28,7 @@ class MetricsCollector:
         try:
             while True:
                 self.collect_metrics()
-                await asyncio.sleep(5)  # Сбор метрик каждые 5 секунд
+                await asyncio.sleep(self.interval)  # Сбор метрик каждые 5 секунд
         except asyncio.CancelledError:
             logging.info("Сбор метрик завершён!")
 
@@ -45,9 +47,15 @@ class MetricsCollector:
         self.memory_used.set(mem.used)
 
     def get_disk_info(self):
-        disk = psutil.disk_usage('/')
-        self.disk_total.set(disk.total)
-        self.disk_used.set(disk.used)
+        partitions = psutil.disk_partitions()
+        for partition in partitions:
+            try:
+                usage = psutil.disk_usage(partition.mountpoint)
+                disk_name = partition.device.removesuffix(':\\')
+                self.disk_total.labels(disk=disk_name).set(usage.total)
+                self.disk_used.labels(disk=disk_name).set(usage.used)
+            except PermissionError:
+                continue
 
 
 def load_env():
@@ -63,13 +71,14 @@ async def main():
 
     host = os.getenv("EXPORTER_HOST", "0.0.0.0")
     port = int(os.getenv("EXPORTER_PORT", "8000"))
+    interval = int(os.getenv("INTERVAL", "5"))
 
     logging.info('Запуск сервера')
     start_http_server(port, addr=host)
     print(f"Сервер запущен: http://{host}:{port}")
 
     collector = MetricsCollector()
-    task = asyncio.create_task(collector.start_collecting())
+    task = asyncio.create_task(collector.start_collecting(interval))
     try:
         await task
     except asyncio.CancelledError:
